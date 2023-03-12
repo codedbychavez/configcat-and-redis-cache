@@ -1,3 +1,5 @@
+
+
 function MyRedisCache() {}
 MyCustomCache.prototype.set = function (key, config) {
   // `key` [string] - a unique cache key
