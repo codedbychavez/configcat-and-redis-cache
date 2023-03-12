@@ -1,14 +1,17 @@
+const configcat = require("configcat-node");
+const configcatRedisCache = require("./configcat-redis-cache");
 
+const redisOptions = { host: "localhost", port: 6379 };
 
-function MyRedisCache() {}
-MyCustomCache.prototype.set = function (key, config) {
-  // `key` [string] - a unique cache key
-  // `config` [object (ProjectConfig)] - configcat's cache config item
-  // insert your cache write logic here
-};
-MyCustomCache.prototype.get = function (key) {
-  // `key` [string] - a unique cache key
-  // insert your cache read logic here
-};
+const configCatClient = configcat.getClient("0yDbCLmNK0qIUakB2LFJDA/u0Z5j4oDjkuHKOVJkIo9Dw", configcat.PollingMode.AutoPoll, 
+  {
+    cache: new configcatRedisCache(redisOptions)
+  }
+);
 
-export default MyRedisCache;
+setInterval(() => {
+  configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false).then(value => {
+    console.log(`${new Date().toTimeString()} isMyAwesomeFeatureEnabled: ${value}`);
+  });
+}, 5000);
+
