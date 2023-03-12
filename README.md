@@ -1,4 +1,4 @@
-# configcat-and-redis-cache
+# Using ConfigCat with Redis
 Using ConfigCat and Redis together
 
 ## How to use run this app
